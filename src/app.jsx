@@ -1,11 +1,14 @@
 import xs from 'xstream'
 
-export function App (sources) {
-  const vtree$ = xs.of(
-    <div>My Awesome Cycle.js app</div>
-  )
-  const sinks = {
-    DOM: vtree$
+import init from './init'
+import search_bar from './components/search_bar'
+
+export default sources => {
+  const {
+    DOM: search_bar_dom$,
+  } = search_bar (sources)
+
+  return {
+    DOM: search_bar_dom$,
   }
-  return sinks
 }
