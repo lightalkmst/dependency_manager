@@ -1,0 +1,13 @@
+UI
+  Add a service
+    Name
+    Description
+    Source code location
+  Tag a service
+    Feature
+
+Backend
+  Do i need one? maybe just AWS lambda
+
+DB
+  

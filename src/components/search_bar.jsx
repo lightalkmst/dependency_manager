@@ -2,6 +2,12 @@ import xs from 'xstream'
 
 import init from '../init'
 
+const search_target = [
+  'name',
+  'feature',
+  'description',
+]
+
 const search_terms = [
   'name',
   'feature',
@@ -12,7 +18,7 @@ export default sources => {
   return {
     DOM: xs.of (
       <div>
-        Search for your API: <select>
+        Search for an API: <select>
           {
             A.map (x =>
               <option value={x}>{`${S.upper (x[0])}${S.substr (1) (-1) (x)}`}</option>
