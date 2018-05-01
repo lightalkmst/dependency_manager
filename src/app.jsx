@@ -1,14 +1,79 @@
 import xs from 'xstream'
 
 import init from './init'
-import search_bar from './components/search_bar'
+
+import nav_bar from './components/nav_bar'
+// import service_browser from './components/service_browser'
+// import feature_browser from './components/feature_browser'
+// import service_adder from './components/service_adder'
+// import feature_adder from './components/feature_adder'
+// import feature_tagger from './components/feature_tagger'
+
+// tabbed selection of different views
 
 export default sources => {
+  const {DOM, HTTP} = sources
+
   const {
-    DOM: search_bar_dom$,
-  } = search_bar (sources)
+    DOM: nav_bar_dom$,
+    nav_state$,
+  } = nav_bar (sources)
+
+  // const {
+  //   DOM: service_browser_dom$,
+  // } = service_browser (sources)
+  //
+  // const {
+  //   DOM: feature_browser_dom$,
+  // } = feature_browser (sources)
+  //
+  // const {
+  //   DOM: service_adder_dom$,
+  // } = service_adder (sources)
+  //
+  // const {
+  //   DOM: feature_adder_dom$,
+  // } = feature_adder (sources)
+  //
+  // const {
+  //   DOM: feature_tagger_dom$,
+  // } = feature_tagger (sources)
 
   return {
-    DOM: search_bar_dom$,
+    DOM:
+      xs.combine (...[
+        nav_bar_dom$,
+        nav_state$,
+        // service_browser_dom$,
+        // feature_browser_dom$,
+        // service_adder_dom$,
+        // feature_adder_dom$,
+        // feature_tagger_dom$,
+      ])
+        .map (([
+          nav_bar_dom,
+          nav_state,
+          // service_browser_dom,
+          // feature_browser_dom,
+          // service_adder_dom,
+          // feature_adder_dom,
+          // feature_tagger_dom,
+        ]) => {
+          var selected_tab_dom = {
+            // service_browser_dom,
+            // feature_browser_dom,
+            // service_adder_dom,
+            // feature_adder_dom,
+            // feature_tagger_dom,
+          }[`${nav_state}_dom`]
+
+          return (
+            <div>
+              {nav_bar_dom}
+              {selected_tab_dom}
+            </div>
+          )
+      })
+    ,
   }
 }

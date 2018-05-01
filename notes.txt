@@ -1,13 +1,21 @@
-UI
-  Add a service
+UI - tabbed views
+  Find service
+  Find feature
+  Add service
     Name
     Description
     Source code location
-  Tag a service
-    Feature
+  Add feature
+    Name
+    Description
+  Tag a service with a feature
+    Recursively ask if dependent services are part of the feature
+  Establish dependency
 
 Backend
-  Do i need one? maybe just AWS lambda
+  Do i need one? maybe just AWS lambda to query the db
 
 DB
-  
+  Table: services
+
+  Table: features
