@@ -22,11 +22,11 @@ export default sources => {
       nav_state$.map (() =>
         <div className='nav_bar'>
           <ul>
-            <li id='service_browser'>Browse Services</li>
-            <li id='feature_browser'>Browse Feature</li>
-            <li id='service_adder'>Add Service</li>
-            <li id='feature_adder'>Add Feature</li>
-            <li id='feature_tagger'>Mark Dependency</li>
+            <li id='service_browser_tab'>Browse Services</li>
+            <li id='feature_browser_tab'>Browse Feature</li>
+            <li id='service_adder_tab'>Add Service</li>
+            <li id='feature_adder_tab'>Add Feature</li>
+            <li id='feature_tagger_tab'>Mark Dependency</li>
           </ul>
         </div>
       )
