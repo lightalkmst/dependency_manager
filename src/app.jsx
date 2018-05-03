@@ -21,10 +21,12 @@ export default sources => {
 
   const {
     DOM: service_browser_dom$,
+  //  HTTP: service_browser_http$,
   } = service_browser (sources)
 
   // const {
   //   DOM: feature_browser_dom$,
+  //   HTTP: feature_browser_http$,
   // } = feature_browser (sources)
 
   const {
@@ -39,6 +41,7 @@ export default sources => {
 
   // const {
   //   DOM: feature_tagger_dom$,
+  //   HTTP: feature_tagger_http$,
   // } = feature_tagger (sources)
 
   return {
@@ -79,8 +82,11 @@ export default sources => {
     ),
     HTTP: (
       xs.merge (...[
+        // service_browser_http$,
+        // feature_browser_http$,
         service_adder_http$,
         feature_adder_http$,
+        // feature_tagger_http$,
       ])
     ),
   }

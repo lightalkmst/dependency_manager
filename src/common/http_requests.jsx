@@ -2,37 +2,22 @@ import init from '../init'
 
 const base_url = 'http://localhost:8000'
 
-  //
-  // .map (() => {
-  //
-  //   return {
-  //     url: 'https://jsonplaceholder.typicode.com/users/' + String(randomNum),
-  //     category: 'users',
-  //     method: 'GET',
-  //   }
-  // })
+const get = path => category => () => ({
+  url: `${base_url}${path}`,
+  category,
+  method: 'GET',
+})
+
+const post = path => category => send => ({
+  url: `${base_url}${path}`,
+  category,
+  method: 'POST',
+  send,
+})
 
 export default {
-  add_service: body => ({
-    url: `${base_url}`,
-    category: 'add_service',
-    method: 'GET',
-    // method: 'POST',
-    // send: body,
-  }),
-  add_feature: body => ({
-    url: `${base_url}`,
-    category: 'add_feature',
-    method: 'GET',
-  }),
-  get_services: () => ({
-    url: `${base_url}`,
-    category: 'get_services',
-    method: 'GET',
-  }),
-  get_features: () => ({
-    url: `${base_url}`,
-    category: 'get_features',
-    method: 'GET',
-  }),
+  get_services: get ('') ('get_services'),
+  get_features: get ('') ('get_features'),
+  add_service: post ('') ('add_service'),
+  add_feature: post ('') ('add_feature'),
 }

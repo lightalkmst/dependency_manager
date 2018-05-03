@@ -37,14 +37,16 @@ export default adder => fields => sources => {
       xs.merge (...[
         // submit
         xs.merge (...[
+          DOM.select (`#${lower_adder}_adder_tab`).events ('click')
+            .mapTo ([{}, false, true]),
           DOM.select (`#${lower_adder}_adder_submit`).events ('click')
-            .mapTo ([{}, true]),
+            .mapTo ([{}, true, false]),
           xs.merge (...A.map (x => DOM.select (`#${lower_adder}_adder_${S.lower (x)}`).events ('input')) (fields))
             // strip the id down to the field name
-            .map (x => [({[S.replace (`${lower_adder}_adder_`) ('') (x.target.id)]: x.target.value}), false]),
+            .map (x => [({[S.replace (`${lower_adder}_adder_`) ('') (x.target.id)]: x.target.value}), false, false]),
         ])
-          .fold (([req], [prop, submit]) => [D.extend (req) (prop), submit], [{}, false])
-          .map (x => x[1] ? http_requests[`add_${lower_adder}`] (x[0]) : {}),
+          .fold (([req, submitted], [prop, submit, tabbed]) => [D.extend (submitted || tabbed ? {} : req) (prop), submit], [{}, false])
+          .map (x => x[1] && ! D.is_empty (x[0]) ? http_requests[`add_${lower_adder}`] (x[0]) : {}),
         // refresh client data
         HTTP.select (`add_${lower_adder}`).flatten ()
           .map (() => http_requests[`get_${lower_adder}s`] ()),
