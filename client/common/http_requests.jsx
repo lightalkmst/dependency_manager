@@ -1,6 +1,8 @@
 import init from '../init'
 
-const base_url = 'http://localhost:8000'
+import cfg from '../config'
+
+const base_url = cfg.base_url
 
 const get = path => category => () => ({
   url: `${base_url}${path}`,

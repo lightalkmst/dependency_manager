@@ -10,8 +10,8 @@ const webpack = require('webpack')
 
 // Paths to be used for webpack configuration
 const paths = {
-  appSrc: path.join(process.cwd(), 'src'),
-  appIndex: path.join(process.cwd(), 'src', 'index.js'),
+  appSrc: path.join(process.cwd(), 'client'),
+  appIndex: path.join(process.cwd(), 'client', 'index.js'),
   appBuild: path.join(process.cwd(), 'build'),
   public: '/'
 }
