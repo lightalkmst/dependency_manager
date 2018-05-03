@@ -8,17 +8,18 @@ export default sources => {
   const {DOM} = sources
 
   const nav_state$ =
-    xs.merge (...[
-      DOM.select ('#service_browser_tab').events ('click').mapTo ('service_browser'),
-      DOM.select ('#feature_browser_tab').events ('click').mapTo ('feature_browser'),
-      DOM.select ('#service_adder_tab').events ('click').mapTo ('service_adder'),
-      DOM.select ('#feature_adder_tab').events ('click').mapTo ('feature_adder'),
-      DOM.select ('#feature_tagger_tab').events ('click').mapTo ('feature_tagger'),
-    ])
+    xs.merge (...A.map (x => DOM.select (`#${x}_tab`).events ('click').mapTo (x)) ([
+      'service_browser',
+      'feature_browser',
+      'service_adder',
+      'feature_adder',
+      'feature_tagger',
+    ]))
       .startWith ('service_browser')
 
   return {
     DOM: (
+      // TODO: style highlighting for selected state
       nav_state$.map (() =>
         <div className='nav_bar'>
           <ul>

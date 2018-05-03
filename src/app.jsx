@@ -29,10 +29,12 @@ export default sources => {
 
   const {
     DOM: service_adder_dom$,
+    HTTP: service_adder_http$,
   } = service_adder (sources)
 
   const {
     DOM: feature_adder_dom$,
+    HTTP: feature_adder_http$,
   } = feature_adder (sources)
 
   // const {
@@ -40,7 +42,7 @@ export default sources => {
   // } = feature_tagger (sources)
 
   return {
-    DOM:
+    DOM: (
       xs.combine (...[
         nav_bar_dom$,
         nav_state$,
@@ -74,6 +76,12 @@ export default sources => {
             </div>
           )
       })
-    ,
+    ),
+    HTTP: (
+      xs.merge (...[
+        service_adder_http$,
+        feature_adder_http$,
+      ])
+    ),
   }
 }
