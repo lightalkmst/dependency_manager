@@ -7,29 +7,25 @@ import http_requests from './http_requests'
 export default adder => fields => sources => {
   const {DOM, HTTP} = sources
 
-  const lower_adder = S.lower (adder)
-
-  const id_of_field = field => `${lower_adder}_adder_${S.lower (field)}`
-
   return {
     DOM: (
       xs.merge (...[
-        DOM.select (`#${lower_adder}_adder_tab`).events ('click'),
-        DOM.select (`#${lower_adder}_adder_submit`).events ('click'),
+        DOM.select (`#${adder.id}_adder_tab`).events ('click'),
+        DOM.select (`#${adder.id}_adder_submit`).events ('click'),
       ])
         .startWith (null)
         // clear out old inputs
-        .map (F.tap (() => A.iter (x => (document.getElementById (`${lower_adder}_adder_${S.lower (x)}`) || {}).value = '') (fields)))
+        .map (F.tap (() => A.iter (({id}) => (document.getElementById (`${adder.id}_adder_${id}`) || {}).value = '') (fields)))
         .map (() => (
           <div>
             {
-              A.map (x =>
-                <div>
-                  {`${x}: `}<input id={`${lower_adder}_adder_${S.lower (x)}`}></input>
-                </div>
-              ) (fields)
+              A.map (({label, id}) => [
+                `${label}: `,
+                <input id={`${adder.id}_adder_${id}`}></input>,
+                <br />,
+              ]) (fields)
             }
-            <button id={`${lower_adder}_adder_submit`}>{`Add ${adder}`}</button>
+            <button id={`${adder.id}_adder_submit`}>{`Add ${adder.label}`}</button>
           </div>
       ))
     ),
@@ -37,19 +33,20 @@ export default adder => fields => sources => {
       xs.merge (...[
         // submit
         xs.merge (...[
-          DOM.select (`#${lower_adder}_adder_tab`).events ('click')
+          // [request, send request, clear request]
+          DOM.select (`#${adder.id}_adder_tab`).events ('click')
             .mapTo ([{}, false, true]),
-          DOM.select (`#${lower_adder}_adder_submit`).events ('click')
+          DOM.select (`#${adder.id}_adder_submit`).events ('click')
             .mapTo ([{}, true, false]),
-          xs.merge (...A.map (x => DOM.select (`#${lower_adder}_adder_${S.lower (x)}`).events ('input')) (fields))
+          xs.merge (...A.map (({id}) => DOM.select (`#${adder.id}_adder_${id}`).events ('input')) (fields))
             // strip the id down to the field name
-            .map (x => [({[S.replace (`${lower_adder}_adder_`) ('') (x.target.id)]: x.target.value}), false, false]),
+            .map (x => [({[S.replace (`${adder.id}_adder_`) ('') (x.target.id)]: x.target.value}), false, false]),
         ])
           .fold (([req, submitted], [prop, submit, tabbed]) => [D.extend (submitted || tabbed ? {} : req) (prop), submit], [{}, false])
-          .map (x => x[1] && ! D.is_empty (x[0]) ? http_requests[`add_${lower_adder}`] (x[0]) : {}),
+          .map (x => x[1] && ! D.is_empty (x[0]) ? http_requests[`add_${adder.id}`] (x[0]) : {}),
         // refresh client data
-        HTTP.select (`add_${lower_adder}`).flatten ()
-          .map (() => http_requests[`get_${lower_adder}s`] ()),
+        HTTP.select (`add_${adder.id}`).flatten ()
+          .map (() => http_requests[`get_${adder.id}s`] ()),
       ])
     ),
   }

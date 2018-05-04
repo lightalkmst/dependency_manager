@@ -19,3 +19,14 @@ DB
   Table: services
 
   Table: features
+
+
+
+
+
+
+
+
+
+set up db
+design db schema
