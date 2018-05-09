@@ -1,6 +1,6 @@
 import init from '../init'
 
-import cfg from '../config'
+import cfg from '../../config'
 
 const base_url = cfg.base_url
 
