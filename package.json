@@ -37,9 +37,8 @@
     "green_curry": "*"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "test": "node scripts/test.js",
-    "build": "node scripts/build.js",
-    "start2": "node server/app.js"
+    "start": "npm run build && node server/app.js",
+    "test": "npm run build && node scripts/test.js",
+    "build": "node scripts/build.js"
   }
 }
